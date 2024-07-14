@@ -71,8 +71,8 @@ const Input = () => {
             { loading 
                 ?   <Loading /> : (!rows? 'Select your teams to get advice' 
                 :   <Box>
-                        {/* <Fixture fixture={rows} /> */}
-                        <Datagrid fixture={rows}/>
+                        <Fixture fixture={rows} />
+                        {/* <Datagrid fixture={rows}/> */}
                     </Box>
             )}
     </Box>
