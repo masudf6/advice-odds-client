@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { Box } from '@mui/material';
+import { Box, Paper } from '@mui/material';
 import { styled } from '@mui/system';
 import bet365 from '../Bet365_Logo.svg';
 
@@ -16,26 +16,23 @@ const StyledLogo = styled('img')(({ theme }) => ({
 const DataGridContainer = styled(Box)(({ theme }) => ({
   '& .MuiDataGrid-root': {
     border: 'none',
-    backgroundColor: 'transparent',
   },
   '& .MuiDataGrid-row': {
     maxHeight: 'none !important',
   },
   '& .MuiDataGrid-cell': {
-    // padding: '5px',
-    // fontSize: '0.8rem',
+    backgroundColor: 'transparent',
     whiteSpace: 'normal !important',
     wordBreak: 'break-word !important',
     textAlign: 'left',
     display: 'flex',
     lineHeight: "normal",
     [theme.breakpoints.down('sm')]: {
-      fontSize: '0.6rem',
-      padding: '3px',
+      fontSize: '0.45rem',
+      padding: '2px !important',
     },
   },
   '& .MuiDataGrid-columnHeader': {
-    // padding: '5px',
     borderBottom: '1px solid #ccc',
     fontWeight: 'bold',
     whiteSpace: 'normal !important',
@@ -44,8 +41,8 @@ const DataGridContainer = styled(Box)(({ theme }) => ({
     display: 'flex',
     lineHeight: "normal",
     [theme.breakpoints.down('sm')]: {
-      fontSize: '0.6rem',
-      padding: '3px',
+      fontSize: '0.5rem',
+      padding: '2px !important',
     },
   },
   '& .MuiDataGrid-sortIcon': {
@@ -69,6 +66,7 @@ const columns = [
     headerName: 'Odds', 
     flex: 1,
     align: 'center',
+    whiteSpace: 'normal !important',
     renderHeader: () => (
       <Box>
         Odds <StyledLogo src={bet365} alt='Bet365' />
@@ -87,22 +85,24 @@ const FixtureDataGrid = ({ fixture }) => {
   }, 1)
 
   return (
-    <DataGridContainer>
-      <Box>
-        <strong>Total Odds: </strong>{aggrOdds}
-      </Box>
-      <DataGrid
-        rows={fixture}
-        columns={columns}
-        getRowId={(row) => row.fixture_id}
-        pageSize={12}
-        checkboxSelection
-        disableSelectionOnClick
-        autoHeight
-        disableColumnMenu
-        onSelectionModelChange={(selection) => setSelectedRows(selection)}
-      />
-    </DataGridContainer>
+    <Paper>
+      <DataGridContainer>
+        <Box sx={{paddingTop: '1em'}}>
+          <strong>Total Odds: </strong>{aggrOdds}
+        </Box>
+        <DataGrid
+          rows={fixture}
+          columns={columns}
+          getRowId={(row) => row.fixture_id}
+          pageSize={12}
+          checkboxSelection
+          disableSelectionOnClick
+          autoHeight
+          disableColumnMenu
+          onSelectionModelChange={(selection) => setSelectedRows(selection)}
+        />
+      </DataGridContainer>
+    </Paper>
   );
 };
 
