@@ -1,41 +1,109 @@
 import React, { useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
+import { Box } from '@mui/material';
+import { styled } from '@mui/system';
+import bet365 from '../Bet365_Logo.svg';
+
+const StyledLogo = styled('img')(({ theme }) => ({
+  height: '20px',
+  width: 'auto',
+  [theme.breakpoints.down('sm')]: {
+    width: 'auto',
+    height: '0.65rem',
+  },
+}));
+
+const DataGridContainer = styled(Box)(({ theme }) => ({
+  '& .MuiDataGrid-root': {
+    border: 'none',
+    backgroundColor: 'transparent',
+  },
+  '& .MuiDataGrid-row': {
+    maxHeight: 'none !important',
+  },
+  '& .MuiDataGrid-cell': {
+    // padding: '5px',
+    // fontSize: '0.8rem',
+    whiteSpace: 'normal !important',
+    wordBreak: 'break-word !important',
+    textAlign: 'left',
+    display: 'flex',
+    lineHeight: "normal",
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '0.6rem',
+      padding: '3px',
+    },
+  },
+  '& .MuiDataGrid-columnHeader': {
+    // padding: '5px',
+    borderBottom: '1px solid #ccc',
+    fontWeight: 'bold',
+    whiteSpace: 'normal !important',
+    wordBreak: 'break-word !important',
+    textAlign: 'left',
+    display: 'flex',
+    lineHeight: "normal",
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '0.6rem',
+      padding: '3px',
+    },
+  },
+  '& .MuiDataGrid-sortIcon': {
+    [theme.breakpoints.down('sm')]: {
+      transform: 'scale(0.5)',
+    },
+  },
+  '& .MuiDataGrid-checkboxInput': {
+    [theme.breakpoints.down('sm')]: {
+      transform: 'scale(0.5)',
+    },
+  },
+}));
 
 const columns = [
-  { field: 'home_team', headerName: 'Home Team', width: 100 },
-  { field: 'away_team', headerName: 'Away Team', width: 100 },
-  { field: 'league', headerName: 'League', width: 100, filterable: true },
-  { field: 'advice', headerName: 'Advice', width: 300 },
-  { field: 'odds', headerName: 'Odds', width: 80 },
-]
+  { field: 'home_team', headerName: 'Home', flex: 1 },
+  { field: 'away_team', headerName: 'Away', flex: 1 },
+  { field: 'league', headerName: 'League', flex: 1 },
+  { field: 'advice', headerName: 'Advice', flex: 1 },
+  { field: 'odds', 
+    headerName: 'Odds', 
+    flex: 1,
+    align: 'center',
+    renderHeader: () => (
+      <Box>
+        Odds <StyledLogo src={bet365} alt='Bet365' />
+      </Box>
+    ) 
+  },
+];
 
-const FixturesDataGrid = ({ fixture }) => {
+const FixtureDataGrid = ({ fixture }) => {
 
-    const [selectedRows, setSelectedRows] = useState([])
+  const [selectedRows, setSelectedRows] = useState([])
 
-    const aggrOdds = selectedRows.reduce((sum, rowID) => {
-        const row = fixture.find((row) => row.fixture_id === rowID)
-        return sum * (row ? row.odds : 0)
-    }, 1)
-
-    const getRowId = (row) => row.fixture_id
+  const aggrOdds = selectedRows.reduce((sum, rowID) => {
+      const row = fixture.find((row) => row.fixture_id === rowID)
+      return sum * (row ? row.odds : 0)
+  }, 1)
 
   return (
-    <div>
-      <div sx={{ marginTop: 16, marginBottom: 16 }}>
+    <DataGridContainer>
+      <Box>
         <strong>Total Odds: </strong>{aggrOdds}
-      </div>
+      </Box>
       <DataGrid
-        getRowId={getRowId}
         rows={fixture}
         columns={columns}
+        getRowId={(row) => row.fixture_id}
+        pageSize={12}
         checkboxSelection
         disableSelectionOnClick
         autoHeight
+        disableColumnMenu
         onSelectionModelChange={(selection) => setSelectedRows(selection)}
       />
-    </div>
-  )
-}
+    </DataGridContainer>
+  );
+};
 
-export default FixturesDataGrid;
+export default FixtureDataGrid;

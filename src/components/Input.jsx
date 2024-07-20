@@ -1,13 +1,10 @@
 import { Autocomplete, Box, Button, TextField } from '@mui/material'
 import axios from 'axios'
 import React, { useState } from 'react'
-import topEuropeanClubs from './topEuropeanClubs'
+import europeanClubs from './europeanClubs'
 import filter_input from '../utils/filter_input'
 import Loading from './Loading'
-import Datagrid from './Datagrid'
-// import CombinedOdds from './CombinedOdds'
-// import Fixture from './Fixture'
-const Fixture = React.lazy(() => import('./Fixture'))
+import FixtureDataGrid from './Datagrid'
 
 const Input = () => {
 
@@ -49,7 +46,7 @@ const Input = () => {
                 multiple
                 id="teams"
                 groupBy={(option) => option.league}
-                options={topEuropeanClubs}
+                options={europeanClubs}
                 getOptionLabel={(option) => option.title}
                 isOptionEqualToValue={(option, value) => option.title === value.title}
                 filterSelectedOptions
@@ -68,13 +65,13 @@ const Input = () => {
             />
             <Button variant='contained' color='warning' sx={{minWidth: '50%'}} onClick={handleClick}>Call API</Button>
         </Box>
-            { loading 
-                ?   <Loading /> : (!rows? 'Select your teams to get advice' 
-                :   <Box>
-                        <Fixture fixture={rows} />
-                        {/* <Datagrid fixture={rows}/> */}
-                    </Box>
-            )}
+            { loading ? <Loading /> 
+                    : (!rows ? 'Select your teams to get advice' 
+                            :   <Box>
+                                    <FixtureDataGrid fixture={rows}/>
+                                </Box>
+                        )
+            }
     </Box>
   )
 }

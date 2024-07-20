@@ -4,7 +4,7 @@ import { Box } from '@mui/material'
 const Footer = () => {
   return (
     <Box textAlign='center' marginBottom='1em'>
-        © 2024 all rights reserved
+        © 2024
     </Box>
   )
 }
