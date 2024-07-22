@@ -21,6 +21,7 @@ const DataGridContainer = styled(Box)(({ theme }) => ({
     maxHeight: 'none !important',
   },
   '& .MuiDataGrid-cell': {
+    padding: '5px !important',
     backgroundColor: 'transparent',
     whiteSpace: 'normal !important',
     wordBreak: 'break-word !important',
@@ -55,7 +56,7 @@ const DataGridContainer = styled(Box)(({ theme }) => ({
       transform: 'scale(0.5)',
     },
   },
-}));
+}))
 
 const columns = [
   { field: 'home_team', headerName: 'Home', flex: 1 },
